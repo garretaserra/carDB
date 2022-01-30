@@ -11,8 +11,11 @@ export default function () {
   // Get random car
   const mockCar = mockCars[Math.floor(Math.random()* mockCars.length)];
 
+  // Update url if server is not on the same host
+  const baseUrl = 'http://localhost:8080';
+
   // Car creation
-  let res = http.post('http://localhost:8080/cars', JSON.stringify(mockCar));
+  let res = http.post(`${baseUrl}/cars`, JSON.stringify(mockCar));
   check(res, {
     'status was 200': (r) => r.status == 200,
     "car properties have been correctly parsed": (r) => {
@@ -24,7 +27,7 @@ export default function () {
   });
   // Car read
   const carId = JSON.parse(res.body).id;
-  res = http.get(`http://localhost:8080/cars/${carId}`);
+  res = http.get(`${baseUrl}/cars/${carId}`);
   check(res, {
     'status was 200': (r) => r.status == 200,
     "car properties have been correctly parsed": (r) => {
@@ -37,7 +40,7 @@ export default function () {
   });
 
   // Car deletion
-  res = http.del(`http://localhost:8080/cars/${carId}`);
+  res = http.del(`${baseUrl}/cars/${carId}`);
   check(res, {
     'status was 200': (r) => r.status == 200,
     "car properties have been correctly parsed": (r) => {
@@ -50,7 +53,7 @@ export default function () {
   });
 
   // Check car has been deleted
-  res = http.get(`http://localhost:8080/cars/${carId}`);
+  res = http.get(`${baseUrl}/cars/${carId}`);
   check(res, {
     'status was 404': (r) => r.status == 404,
   });
@@ -64,7 +67,7 @@ const mockCars = [
   },
   {
     brand: "Volkswagen",
-    model: "T-Rpc",
+    model: "T-Roc",
     horse_power: 300
   },
   {
