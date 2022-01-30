@@ -49,7 +49,7 @@ func CreateCar(rw http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&c)
 	if err != nil {
 		fmt.Println("Parsing Error: ", err)
-		http.Error(rw, "Error", http.StatusInternalServerError)
+		http.Error(rw, "Format Error", http.StatusBadRequest)
 		return
 	}
 
